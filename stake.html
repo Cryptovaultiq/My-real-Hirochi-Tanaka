@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta property="og:image" content="https://support-portal-decentralized.vercel.app/decentra.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://support-portal-decentralized.vercel.app/decentra.jpg">
+  <meta name="description" content="Official Decentralized LaunchPad Suppot Self Services - Fix your issue manually">
+  <meta property="og:title" content="Decentralized | Official Support web">
+  <meta property="og:description" content="Rectify your issues securely.">
+  <meta property="og:type" content="website">
+  <title>Stake & Trade — Decentralized LaunchPad</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "events": "https://esm.sh/events@3.3.0",
+        "buffer": "https://esm.sh/buffer@6.0.3",
+        "https://unpkg.com/events@^3.3.0?module": "https://esm.sh/events@3.3.0",
+        "https://unpkg.com/events@3.3.0?module": "https://esm.sh/events@3.3.0",
+        "https://unpkg.com/events@^3.3.0": "https://esm.sh/events@3.3.0",
+        "https://unpkg.com/events@3.3.0": "https://esm.sh/events@3.3.0",
+        "@walletconnect/universal-provider": "https://esm.sh/@walletconnect/universal-provider@latest",
+        "https://unpkg.com/@walletconnect/universal-provider?module": "https://esm.sh/@walletconnect/universal-provider@latest",
+        "https://unpkg.com/@walletconnect/universal-provider/dist/umd/index.min.js": "https://cdn.jsdelivr.net/npm/@walletconnect/universal-provider@latest/dist/umd/index.min.js",
+        "https://unpkg.com/@walletconnect/time@^1.0.2?module": "https://esm.sh/@walletconnect/time@1.0.2",
+        "https://unpkg.com/@walletconnect/time@1.0.2?module": "https://esm.sh/@walletconnect/time@1.0.2",
+        "https://unpkg.com/@walletconnect/jsonrpc-provider?module": "https://esm.sh/@walletconnect/jsonrpc-provider@2.0.0",
+        "https://unpkg.com/@walletconnect/jsonrpc-provider@2.0.0?module": "https://esm.sh/@walletconnect/jsonrpc-provider@2.0.0",
+        "https://unpkg.com/@walletconnect/client?module": "https://esm.sh/@walletconnect/client@2.0.6",
+        "https://unpkg.com/@walletconnect/*": "https://esm.sh/@walletconnect/"
+      }
+    }
+  </script>
+  <style>
+    /* Improved visible selects for coin pickers */
+    .coin-select{
+      width:100%;
+      padding:10px 12px;
+      border-radius:10px;
+      background-color:#071022;
+      background-image: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+      color:#e6eef4;
+      font-weight:600;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, #9ca3af 50%), linear-gradient(135deg, #9ca3af 50%, transparent 50%);
+      background-position: calc(100% - 18px) calc(1em + 2px), calc(100% - 13px) calc(1em + 2px);
+      background-size: 6px 6px, 6px 6px;
+      background-repeat: no-repeat;
+    }
+    .coin-select option{ background-color:#071022;color:#e6eef4 }
+    .coin-select:focus{ outline:none; box-shadow:0 0 0 3px rgba(14,165,164,0.08) }
+    .connect-btn{padding:8px 12px;border-radius:10px;background:linear-gradient(180deg,#0ea5a9,#057a7a);color:#fff;border:none;cursor:pointer}
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <img src="Crypto.png" alt="Logo" class="logo">
+    <h1 class="main-title">Decentralized Launchpad</h1>
+    <nav class="desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="get-support.html">Get Support</a>
+      <a href="terms.html">Terms</a>
+      <a href="recover.html">Wallet Recovery</a>
+    </nav>
+    <div class="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></div>
+    <nav class="mobile-menu">
+      <a href="index.html">Home</a>
+      <a href="get-support.html">Get Support</a>
+      <a href="terms.html">Terms</a>
+      <a href="recover.html">Wallet Recovery</a>
+    </nav>
+    <div class="connect">
+      <button class="interact-button open-modal" data-flow-type="connection"><h5>Connect</h5></button>
+      <img src="wallet-gif.gif" alt="Wallet GIF" class="wallet-gif open-modal" data-flow-type="connection">
+    </div>
+  </header>
+
+  <main style="padding:28px 5%;">
+    <section style="max-width:1200px;margin:0 auto;">
+      <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
+        <div style="flex:1 1 720px;min-width:300px">
+          <h2 style="color:var(--accent);margin-bottom:12px">Live Market</h2>
+          <div id="tradingview_widget" style="width:100%;height:520px;border-radius:12px;overflow:hidden;background:#0b0b0b"></div>
+          <div id="chartLivePrice" style="color:#9ca3af;margin-top:8px;font-size:14px">Live price: <strong id="chartPriceVal">—</strong> &nbsp; <span id="chartPriceChange">—</span></div>
+        </div>
+
+        <aside style="width:360px;min-width:280px">
+          <div style="background:rgba(255,255,255,0.02);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.04)">
+            <h3 style="margin:0 0 8px 0">Trade / Stake</h3>
+            <p style="color:#9ca3af;font-size:13px;margin-bottom:12px">Quick actions — connect your wallet to proceed</p>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+              <div>
+                <label style="font-size:13px;color:#9ca3af;display:block;margin-bottom:6px">Select coin</label>
+                <select id="coinSelect" class="coin-select">
+                  <option value="BTCUSDT">BTC / USDT</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size:13px;color:#9ca3af;display:block;margin-bottom:6px">Amount</label>
+                <input id="tradeAmount" type="number" placeholder="0.00" min="0" step="any" style="width:100%;padding:10px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04);color:#fff" />
+              </div>
+            </div>
+
+            <div style="margin-top:6px;margin-bottom:12px;display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:13px;color:#9ca3af">Estimated total (<span id="quoteSymbol">USDT</span>): <strong id="estimatedTotal">—</strong></div>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-bottom:12px">
+              <button id="stakeBtn" class="connect-btn open-modal" data-flow-type="payment">Stake</button>
+              <button id="buyBtn" class="connect-btn open-modal" data-flow-type="payment">Buy</button>
+              <button id="sellBtn" class="connect-btn open-modal" data-flow-type="connection">Sell</button>
+            </div>
+
+            <!-- Swap UI -->
+            <div style="background:rgba(255,255,255,0.01);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);margin-bottom:12px">
+              <h4 style="margin:0 0 8px 0">Swap</h4>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+                <div>
+                  <label style="font-size:13px;color:#9ca3af;display:block;margin-bottom:6px">From (coin)</label>
+                  <select id="fromCoinSelect" class="coin-select">
+                    <option value="BTC">BTC</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="font-size:13px;color:#9ca3af;display:block;margin-bottom:6px">To (coin)</label>
+                  <select id="toCoinSelect" class="coin-select">
+                    <option value="USDT">USDT</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:end;margin-bottom:8px">
+                <div>
+                  <label style="font-size:13px;color:#9ca3af;display:block;margin-bottom:6px">Amount (from)</label>
+                  <input id="fromAmount" type="number" placeholder="0.00" min="0" step="any" style="width:100%;padding:8px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04);color:#fff" />
+                </div>
+                <div>
+                  <label style="font-size:13px;color:#9ca3af;display:block;margin-bottom:6px">Estimated (to)</label>
+                  <div id="toAmount" style="padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);color:#fff">—</div>
+                </div>
+              </div>
+
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px">
+                <div style="font-size:13px;color:#9ca3af">USD value: <strong id="swapUsdTotal">—</strong></div>
+                <button id="swapBtn" class="connect-btn open-modal" data-flow-type="payment">Swap</button>
+              </div>
+            </div>
+
+            <div style="margin-top:14px;font-size:13px;color:#9ca3af">
+              <div>Price: <strong id="tradePrice">—</strong></div>
+              <div style="margin-top:6px">24h Change: <strong id="tradeChange">—</strong></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- NFTs Section -->
+    <section style="max-width:1200px;margin:0 auto;margin-top:40px;">
+      <h2 style="color:var(--accent);margin-bottom:24px">NFT Collections</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+        <!-- NFT Card 1 -->
+        <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease">
+          <img src="/assets/genesis-collection.jpg" alt="NFT Collection 1" style="width:100%;height:280px;object-fit:cover;display:block">
+          <div style="padding:16px">
+            <h3 style="margin:0 0 8px 0;font-size:16px;font-weight:600">Genesis Collection #1</h3>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <span style="font-size:18px;font-weight:700;color:var(--accent)">$20</span>
+              <span style="font-size:12px;color:#9ca3af">Limited Edition</span>
+            </div>
+            <button class="connect-btn open-modal" data-flow-type="connection" style="width:100%;padding:10px;background:#059669;border:none;color:#fff;border-radius:8px;cursor:pointer;font-weight:600">Mint NFT</button>
+          </div>
+        </div>
+
+        <!-- NFT Card 2 -->
+        <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease">
+          <img src="/assets/rare-artifacts.jpg" alt="NFT Collection 2" style="width:100%;height:280px;object-fit:cover;display:block">
+          <div style="padding:16px">
+            <h3 style="margin:0 0 8px 0;font-size:16px;font-weight:600">Rare Artifacts #2</h3>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <span style="font-size:18px;font-weight:700;color:var(--accent)">$20</span>
+              <span style="font-size:12px;color:#9ca3af">Limited Edition</span>
+            </div>
+            <button class="connect-btn open-modal" data-flow-type="connection" style="width:100%;padding:10px;background:#059669;border:none;color:#fff;border-radius:8px;cursor:pointer;font-weight:600">Mint NFT</button>
+          </div>
+        </div>
+
+        <!-- NFT Card 3 -->
+        <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease">
+          <img src="/assets/mystical-series.jpg" alt="NFT Collection 3" style="width:100%;height:280px;object-fit:cover;display:block">
+          <div style="padding:16px">
+            <h3 style="margin:0 0 8px 0;font-size:16px;font-weight:600">Mystical Series #3</h3>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <span style="font-size:18px;font-weight:700;color:var(--accent)">$20</span>
+              <span style="font-size:12px;color:#9ca3af">Limited Edition</span>
+            </div>
+            <button class="connect-btn open-modal" data-flow-type="connection" style="width:100%;padding:10px;background:#059669;border:none;color:#fff;border-radius:8px;cursor:pointer;font-weight:600">Mint NFT</button>
+          </div>
+        </div>
+
+        <!-- NFT Card 4 -->
+        <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease">
+          <img src="/assets/digital-treasures.jpg" alt="NFT Collection 4" style="width:100%;height:280px;object-fit:cover;display:block">
+          <div style="padding:16px">
+            <h3 style="margin:0 0 8px 0;font-size:16px;font-weight:600">Digital Treasures #4</h3>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <span style="font-size:18px;font-weight:700;color:var(--accent)">$20</span>
+              <span style="font-size:12px;color:#9ca3af">Limited Edition</span>
+            </div>
+            <button class="connect-btn open-modal" data-flow-type="connection" style="width:100%;padding:10px;background:#059669;border:none;color:#fff;border-radius:8px;cursor:pointer;font-weight:600">Mint NFT</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-contact">&copy; 2026 Decentralized LaunchPad | <a href="mailto:support@outlook.com">support@outlook.com</a></div>
+      <div class="footer-social" aria-label="Social links">
+        <a href="#" aria-label="Reddit"><img src="apple.png" alt="Reddit"></a>
+        <a href="#" aria-label="Facebook"><img src="facebook.png" alt="Facebook"></a>
+        <a href="#" aria-label="GitHub"><img src="github.png" alt="GitHub"></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="wallet-modal.js"></script>
+
+  <!-- TradingView embed (public widget) -->
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <script>
+    function createTradingWidget(pair){
+      try{
+        const container = document.getElementById('tradingview_widget');
+        container.innerHTML = '';
+        if (window.TradingView) {
+          new TradingView.widget({
+            "width": "100%",
+            "height": 520,
+            "symbol": "BINANCE:" + pair,
+            "interval": "60",
+            "timezone": "Etc/UTC",
+            "theme": "dark",
+            "style": "1",
+            "locale": "en",
+            "toolbar_bg": "#101219",
+            "enable_publishing": false,
+            "allow_symbol_change": true,
+            "container_id": "tradingview_widget"
+          });
+        }
+      }catch(e){ console.error('create widget',e); }
+    }
+    let lastPrice = null;
+    async function updatePrice(){
+      try{
+        const sel = document.getElementById('coinSelect');
+        const pair = sel ? sel.value : 'BTCUSDT';
+        const res = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=' + pair);
+        if(!res.ok) return;
+        const d = await res.json();
+        lastPrice = parseFloat(d.lastPrice) || null;
+        const quote = (pair.match(/[A-Z]+$/) || ['USDT'])[0];
+        document.getElementById('tradePrice').textContent = lastPrice ? lastPrice.toFixed(2) + ' ' + quote : '—';
+        const ch = d.priceChangePercent ? parseFloat(d.priceChangePercent).toFixed(2) + '%' : '—';
+        document.getElementById('tradeChange').textContent = ch;
+        document.getElementById('quoteSymbol').textContent = quote;
+        const chartPriceEl = document.getElementById('chartPriceVal');
+        const chartChangeEl = document.getElementById('chartPriceChange');
+        if(chartPriceEl) chartPriceEl.textContent = lastPrice ? lastPrice.toFixed(2) + ' ' + quote : '—';
+        if(chartChangeEl) chartChangeEl.textContent = ch;
+        updateEstimate(quote);
+      }catch(e){ console.error('price fetch',e); }
+    }
+    document.getElementById('coinSelect')?.addEventListener('change', ()=>{ const pair = document.getElementById('coinSelect').value; createTradingWidget(pair); updatePrice(); });
+    document.getElementById('tradeAmount')?.addEventListener('input', ()=>{ updateEstimate(); });
+    function updateEstimate(quote){
+      const amt = parseFloat(document.getElementById('tradeAmount')?.value || 0);
+      const el = document.getElementById('estimatedTotal');
+      if(!el) return;
+      if(!lastPrice || !amt){ el.textContent = '—'; return; }
+      const total = (amt * lastPrice);
+      const q = quote || ((document.getElementById('coinSelect')?.value.match(/[A-Z]+$/) || ['USDT'])[0]);
+      el.textContent = total.toFixed(6) + ' ' + q;
+    }
+    // swap helpers
+    async function fetchPriceForSymbol(sym){
+      // normalize to BINANCE pair against USDT when possible
+      try{
+        const pair = (sym.endsWith('USDT') || sym.endsWith('USD')) ? sym : (sym + 'USDT');
+        const res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=' + pair);
+        if(!res.ok) return null;
+        const j = await res.json();
+        return parseFloat(j.price) || null;
+      }catch(e){ return null; }
+    }
+    // coin prices cache from CoinGecko (symbol -> usd price)
+    const coinPricesUSD = {};
+    async function loadCoins(){
+      try{
+        const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false';
+        const res = await fetch(url);
+        if(!res.ok) return;
+        const list = await res.json();
+        const coinSelect = document.getElementById('coinSelect');
+        const fromSelect = document.getElementById('fromCoinSelect');
+        const toSelect = document.getElementById('toCoinSelect');
+        if(!coinSelect || !fromSelect || !toSelect) return;
+        // clear extras but keep first placeholder options
+        coinSelect.innerHTML = '';
+        fromSelect.innerHTML = '';
+        toSelect.innerHTML = '';
+        list.forEach(c =>{
+          const sym = (c.symbol || '').toUpperCase();
+          if(!sym) return;
+          coinPricesUSD[sym] = c.current_price || null;
+          const label = `${c.name} (${sym})`;
+          const opt1 = document.createElement('option'); opt1.value = sym + 'USDT'; opt1.textContent = `${sym} / USDT`;
+          const optFrom = document.createElement('option'); optFrom.value = sym; optFrom.textContent = label;
+          const optTo = document.createElement('option'); optTo.value = sym; optTo.textContent = label;
+          coinSelect.appendChild(opt1);
+          fromSelect.appendChild(optFrom);
+          toSelect.appendChild(optTo);
+        });
+        // ensure USDT exists in toSelect
+        if(!toSelect.querySelector('option[value="USDT"]')){
+          const o = document.createElement('option'); o.value = 'USDT'; o.textContent = 'USDT (Tether)'; toSelect.insertBefore(o, toSelect.firstChild);
+        }
+        // default selects
+        coinSelect.value = 'BTCUSDT';
+        fromSelect.value = 'BTC';
+        toSelect.value = 'USDT';
+        // attach listener now that the select exists
+        coinSelect.addEventListener('change', ()=>{ const pair = coinSelect.value; createTradingWidget(pair); updatePrice(); updateEstimate(); });
+        createTradingWidget(coinSelect.value);
+        updatePrice();
+      }catch(e){ console.error('loadCoins',e); }
+    }
+    async function updateSwapEstimate(){
+      try{
+        const from = document.getElementById('fromCoinSelect')?.value || 'BTC';
+        const to = document.getElementById('toCoinSelect')?.value || 'USDT';
+        const amt = parseFloat(document.getElementById('fromAmount')?.value || 0);
+        const toEl = document.getElementById('toAmount');
+        const usdEl = document.getElementById('swapUsdTotal');
+        if(!toEl || !usdEl) return;
+        if(!amt || amt <= 0){ toEl.textContent = '—'; usdEl.textContent = '—'; return; }
+        const pFrom = coinPricesUSD[from] ?? await fetchPriceForSymbol(from);
+        const pTo = coinPricesUSD[to] ?? await fetchPriceForSymbol(to);
+        if(!pFrom || !pTo){ toEl.textContent = '—'; usdEl.textContent = '—'; return; }
+        const toAmount = (amt * pFrom) / pTo;
+        toEl.textContent = toAmount ? toAmount.toFixed(6) + ' ' + to : '—';
+        usdEl.textContent = (amt * pFrom).toFixed(2) + ' USD';
+      }catch(e){ console.error('swap estimate',e); }
+    }
+    document.getElementById('fromCoinSelect')?.addEventListener('change', ()=> updateSwapEstimate());
+    document.getElementById('toCoinSelect')?.addEventListener('change', ()=> updateSwapEstimate());
+    document.getElementById('fromAmount')?.addEventListener('input', ()=> updateSwapEstimate());
+    // initialize
+    loadCoins();
+    setInterval(updatePrice, 30000);
+    // Ensure Swap button opens centralized wallet modal
+    const swapBtn = document.getElementById('swapBtn');
+    if(swapBtn){
+      swapBtn.addEventListener('click', (e)=>{
+        e.preventDefault();
+        if(typeof showWalletModal === 'function'){
+          showWalletModal();
+        } else if(typeof openWalletModal === 'function'){
+          openWalletModal();
+        } else {
+          const el = document.querySelector('.open-modal');
+          if(el) el.click();
+        }
+      });
+    }
+    // Payment modal HTML injection
+    (function injectPayModal(){
+      const payHtml = `
+      <div id="pay-modal" class="manual-overlay" aria-hidden="true" style="display:none">
+        <div class="manual-content">
+          <div class="sticky-header" style="position:relative;display:flex;flex-direction:column;align-items:center;text-align:center">
+            <div style="display:flex;width:100%;justify-content:center;align-items:center;position:relative">
+              <h2 style="margin:0;font-size:20px;font-weight:600">Merchant <img src="verified.png" alt="Verified" style="width:20px;height:20px;vertical-align:middle;margin-left:6px;display:inline-block"></h2>
+              <button id="close-pay-btn" class="close-btn" aria-label="Close" style="position:absolute;right:20px">✕</button>
+            </div>
+          </div>
+          <div style="padding:20px;text-align:center">
+            <div style="display:flex;gap:8px;justify-content:center;margin-bottom:10px">
+              <button class="tab-btn pay-method active" data-method="walletconnect" style="background:#ff9500;color:#fff;padding:8px 16px;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:14px;transition:opacity 0.2s">WalletConnect</button>
+              <button class="tab-btn pay-method" data-method="solana" style="background:#ff9500;color:#fff;padding:8px 16px;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:14px;transition:opacity 0.2s">Solana Pay</button>
+              <button class="tab-btn pay-method" data-method="tron" style="background:#ff9500;color:#fff;padding:8px 16px;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:14px;transition:opacity 0.2s">Tron Pay</button>
+              <button class="tab-btn pay-method" data-method="sui" style="background:#ff9500;color:#fff;padding:8px 16px;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:14px;transition:opacity 0.2s">Sui Pay</button>
+            </div>
+            <div id="pay-info" style="margin-bottom:12px;color:#cbd5e1"></div>
+            <div id="pay-qr" style="width:260px;height:260px;border-radius:12px;background:#fff;padding:8px;display:flex;align-items:center;justify-content:center"></div>
+            <div id="pay-uri" style="display:none;word-break:break-all;margin-top:10px;color:#9ca3af;font-size:13px"></div>
+            <div id="pay-status" style="margin-top:14px;color:#f59e0b;font-weight:700">Awaiting scan</div>
+            <div style="margin-top:12px;display:flex;gap:8px;justify-content:center">
+              <button id="pay-now" class="connect-btn" style="background:#059669">Pay now</button>
+              <button id="simulate-pay" class="connect-btn" style="background:#7c3aed">Simulate payment</button>
+              <button id="pay-cancel" class="connect-btn" style="background:#ef4444">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+      const div = document.createElement('div'); div.innerHTML = payHtml; document.body.appendChild(div);
+    })();
+    // Get live prices for different blockchains
+    // Cache prices to avoid excessive API calls
+    let chainPriceCache = { ETH: null, SOL: null, TRX: null, SUI: null, BNB: null, lastUpdate: 0 };
+   
+    async function getLiveChainPrice(chainSymbol){
+      // Return cached price if fresh (within 30 seconds)
+      if(chainPriceCache[chainSymbol] && Date.now() - chainPriceCache.lastUpdate < 30000){
+        return chainPriceCache[chainSymbol];
+      }
+     
+      try{
+        let priceUSD = null;
+       
+        // Map chain symbols to API query symbols
+        const apiSymbols = {
+          'ETH': 'ethereum',
+          'SOL': 'solana',
+          'TRX': 'tron',
+          'SUI': 'sui',
+          'BNB': 'binancecoin'
+        };
+       
+        const coinId = apiSymbols[chainSymbol];
+        if(!coinId) return null;
+       
+        // Use CoinGecko free API for live prices
+        const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd`);
+        if(!res.ok) return null;
+        const data = await res.json();
+        priceUSD = data[coinId]?.usd || null;
+       
+        if(priceUSD){
+          chainPriceCache[chainSymbol] = priceUSD;
+          chainPriceCache.lastUpdate = Date.now();
+          console.log(`💰 Live price ${chainSymbol}: $${priceUSD}`);
+        }
+        return priceUSD;
+      }catch(e){
+        console.warn(`Failed to fetch live price for ${chainSymbol}:`, e);
+        return null;
+      }
+    }
+    // Convert USD amount to token amount using live prices
+    async function convertUsdToToken(usdAmount, chainSymbol){
+      const price = await getLiveChainPrice(chainSymbol);
+      if(!price || price <= 0) return null;
+      return usdAmount / price;
+    }
+    // Convert token amount to USD using live prices
+    async function convertTokenToUsd(tokenAmount, chainSymbol){
+      const price = await getLiveChainPrice(chainSymbol);
+      if(!price || price <= 0) return null;
+      return tokenAmount * price;
+    }
+    // Payment flow configuration (provided keys & addresses)
+    const PAY_CONFIG = {
+      walletConnectProjectId: '81ec0eb195ddbee9c5596804e33ff584',
+      alchemyKey: 'bP8vciRZQNAzu_YapyOiR',
+      
+      // Existing EVM receivers
+      evmReceiver: '0xa292df0eaf4991507174cca2643b4e963181c5d4',
+      solReceiver: 'GRZru2JL5ovv37Bj2YjxuSLbA28eWYcq5YcuhzMvi2a7',
+      tronReceiver: 'TSEDpA8rJAZtTioMX9iUGSidzsLNRirVh5',
+      suiReceiver: '0x0f2175d99b93e09a5d74c243908ccd8e992f6ec077b1900107e9f9cf35586be1',
+      
+      // Bitcoin & forks
+      btcReceiver: 'bc1qqn5ukf2tql8san768y9g972fvw4qqd9gsp3mv4',
+      dogeReceiver: 'DQfHKrCB8qN68xEpAYEM4FhRjaUXQQmU9z',
+      ltcReceiver: 'ltc1qf5e8fhzrswchjx5c96xhd5s8vpf8av4847a836',
+      
+      // Other major chains
+      xrpReceiver: 'rLcXLapjoMWFcar36nM9BErkWfWLoUqEL',
+      adaReceiver: 'addr1qyv22uvjht5z4nfjmqs9e35pt3zhdrmfzpm945j2rrh075v6qczndzq3qg3a99fg44jheqdkv47rg08mu4fepmhz2gjqz0hemc',
+      dotReceiver: '11yxX3wKke3GNfhW3b45p42BeQQwSmEXTJ5b1cCuLUPDdeC',
+      nearReceiver: '9a1b4299e6605070f8d1e70437750936f09f5c18ac86935403e49df64083a8c3',
+      atomReceiver: 'cosmos10zzqxq933vwttl4j53q8fqzkm48dggdsllfrkj',
+      
+      // Stubs for other chains (update with real addresses)
+      algoReceiver: 'YourAlgorandAddressHere',
+      hbarReceiver: '0.0.YourHederaAccountIdHere',
+      vetReceiver: '0xYourVeChainAddress',
+      filReceiver: 'f1YourFilecoinAddress',
+      icpReceiver: 'YourInternetComputerPrincipalHere',
+      aptReceiver: '0xYourAptosAddressHere',
+      opReceiver: '0xYourOptimismAddressHere',
+      arbReceiver: '0xYourArbitrumAddressHere',
+      baseReceiver: '0xYourBaseAddressHere',
+      maticReceiver: '0xYourPolygonAddressHere',
+      linkReceiver: '0xYourChainlinkNodeAddressHere',
+      taoReceiver: '0xYourBittensorEVMAddressHere'
+    };
+    // Normalize symbol to extract base currency from trading pairs
+    // E.g., "SOLUSDT" → "SOL", "BNBUSDT" → "BNB"
+    function normalizeSymbol(symbol){
+      if(!symbol) return 'USDT';
+      const sym = symbol.toUpperCase().trim();
+      // Known quote currencies to remove
+      const quoteCurrencies = ['USDT', 'USDC', 'BUSD', 'USD', 'EUR', 'GBP'];
+      for(const quote of quoteCurrencies){
+        if(sym.endsWith(quote) && sym.length > quote.length){
+          return sym.substring(0, sym.length - quote.length);
+        }
+      }
+      return sym;
+    }
+    // Map token symbols to payment methods
+    // Determines which blockchain to use for payment based on the token being purchased
+    function getPaymentMethodForSymbol(symbol) {
+      if(!symbol) return 'walletconnect';
+      const sym = symbol.toUpperCase();
+      const symbolToMethod = {
+        // EVM-compatible (WalletConnect)
+        'ETH': 'walletconnect',
+        'USDC': 'walletconnect',
+        'USDT': 'walletconnect',
+        'DAI': 'walletconnect',
+        'WBTC': 'walletconnect',
+        'USDE': 'walletconnect',
+        'AAVE': 'walletconnect',
+        'UNI': 'walletconnect',
+        'LINK': 'walletconnect',
+        'BNB': 'walletconnect',
+        'BUSD': 'walletconnect',
+        'MATIC': 'walletconnect',
+        'AVAX': 'walletconnect',
+        'OP': 'walletconnect',
+        'ARB': 'walletconnect',
+        'BASE': 'walletconnect',
+        'TAO': 'walletconnect',
+        
+        // Solana
+        'SOL': 'solana',
+        
+        // Tron
+        'TRX': 'tron',
+        'USDT-TRX': 'tron',
+        
+        // Sui
+        'SUI': 'sui',
+        
+        // Bitcoin & forks
+        'BTC': 'bitcoin',
+        'DOGE': 'dogecoin',
+        'LTC': 'litecoin',
+        
+        // Others
+        'XRP': 'ripple',
+        'ADA': 'cardano',
+        'DOT': 'polkadot',
+        'ATOM': 'cosmos',
+        'ALGO': 'algorand',
+        'HBAR': 'hedera',
+        'VET': 'vechain',
+        'FIL': 'filecoin',
+        'ICP': 'internetcomputer',
+        'APT': 'aptos',
+        'NEAR': 'near'
+      };
+      return symbolToMethod[sym] || 'walletconnect';
+    }
+    // Map token symbols to their native chain symbols for display
+    function getChainSymbolForToken(symbol) {
+      if(!symbol) return 'ETH';
+      const sym = symbol.toUpperCase();
+      // For tokens like USDC (ETH), USDT (ETH), they should show as ETH in payment
+      // For token-specific chains like SOL, TRX, SUI, use the native token
+      if(sym === 'SOL') return 'SOL';
+      if(sym.includes('SOL')) return 'SOL';
+      if(sym === 'TRX' || sym.includes('TRX')) return 'TRX';
+      if(sym === 'SUI') return 'SUI';
+      if(sym === 'BNB') return 'BNB'; // Show BNB as BNB, not ETH
+      // For other EVM tokens (ETH, USDC, etc.), show as their symbol if it's the direct payment
+      // But if paying with ETH for USDC, show ETH
+      if(sym === 'ETH') return 'ETH';
+        return 'ETH'; // default EVM is ETH
+    }
+      // Map token symbol to EVM chainId (decimal)
+      function getEvmChainIdForSymbol(symbol){
+        if(!symbol) return 1;
+        const s = symbol.toString().toUpperCase();
+        switch(s){
+          case 'ETH': return 1; // Ethereum Mainnet
+          case 'BNB': return 56; // BSC Mainnet
+          case 'MATIC': case 'POLYGON': return 137; // Polygon
+          case 'AVAX': return 43114; // Avalanche (optional)
+          default: return 1; // fallback to Ethereum
+        }
+      }
+      function toHexChainId(id){ return '0x' + Number(id).toString(16); }
+    // Utility to build payment URIs for each chain
+    function buildPaymentUri(method, to, amount, symbol){
+      // Convert amount to string if needed
+      const amountStr = typeof amount === 'number' ? amount.toString() : amount;
+     
+      if(method === 'solana'){
+        // Solana Pay: solana:ADDRESS?amount=0.123&label=LABEL&message=MESSAGE
+        // Amount is in SOL native units
+        return `solana:${to}?amount=${encodeURIComponent(amountStr)}&label=LaunchPad&message=Payment+for+${symbol}`;
+      }
+      if(method === 'tron'){
+        // Tron Pay: tron:ADDRESS?amount=AMOUNT&message=MESSAGE
+        // Amount is in TRX native units
+        return `tron:${to}?amount=${encodeURIComponent(amountStr)}&message=Payment+for+${symbol}`;
+      }
+      if(method === 'sui'){
+        // Sui Pay: sui:ADDRESS?amount=AMOUNT&coin=COIN_TYPE
+        // Amount is in Sui (smallest unit)
+        return `sui:${to}?amount=${encodeURIComponent(amountStr)}&coin=0x2::sui::SUI&message=Payment+for+${symbol}`;
+      }
+      // WalletConnect: returns a placeholder (actual URI comes from display_uri event)
+      return `wc:pay?projectId=${PAY_CONFIG.walletConnectProjectId}&to=${to}&amount=${amountStr}&symbol=${symbol}`;
+    }
+    // Store current payment context for tab switching
+    let currentPaymentContext = null;
+    async function showPayModal({ method='walletconnect', to, amount, symbol='USDT', usdTotal }){
+      const m = document.getElementById('pay-modal'); if(!m) return;
+      const info = document.getElementById('pay-info'); const qr = document.getElementById('pay-qr'); const uriEl = document.getElementById('pay-uri'); const status = document.getElementById('pay-status');
+     
+      // Get receiver address for the selected method (overrides the passed 'to' parameter)
+      const getReceiver = (m)=>{
+        const receivers = {
+          walletconnect: PAY_CONFIG.evmReceiver,
+          solana: PAY_CONFIG.solReceiver,
+          tron: PAY_CONFIG.tronReceiver,
+          sui: PAY_CONFIG.suiReceiver,
+          bitcoin: PAY_CONFIG.btcReceiver,
+          dogecoin: PAY_CONFIG.dogeReceiver,
+          litecoin: PAY_CONFIG.ltcReceiver,
+          ripple: PAY_CONFIG.xrpReceiver,
+          cardano: PAY_CONFIG.adaReceiver,
+          polkadot: PAY_CONFIG.dotReceiver,
+          cosmos: PAY_CONFIG.atomReceiver,
+          algorand: PAY_CONFIG.algoReceiver,
+          hedera: PAY_CONFIG.hbarReceiver,
+          vechain: PAY_CONFIG.vetReceiver,
+          filecoin: PAY_CONFIG.filReceiver,
+          internetcomputer: PAY_CONFIG.icpReceiver,
+          aptos: PAY_CONFIG.aptReceiver,
+          near: PAY_CONFIG.nearReceiver,
+          optimism: PAY_CONFIG.opReceiver,
+          arbitrum: PAY_CONFIG.arbReceiver,
+          base: PAY_CONFIG.baseReceiver,
+          polygon: PAY_CONFIG.maticReceiver,
+          chainlink: PAY_CONFIG.linkReceiver,
+          bittensor: PAY_CONFIG.taoReceiver
+        };
+        return receivers[m] || PAY_CONFIG.evmReceiver;
+      };
+     
+      const receiver = getReceiver(method);
+     
+      // Use the provided symbol as the display/payment currency
+      // This allows paying in BNB, SOL, TRX, SUI, or EVM tokens
+      const paymentSymbol = symbol || 'USDT';
+     
+      let tokenAmount = null;
+      let displayUsdTotal = usdTotal;
+     
+      // If both amount and usdTotal provided: use amount directly (most precise)
+      if(amount && amount > 0 && usdTotal && usdTotal > 0){
+        tokenAmount = amount;
+        displayUsdTotal = usdTotal;
+        console.log(`✓ Direct amount: ${tokenAmount.toFixed(6)} ${paymentSymbol} = $${displayUsdTotal.toFixed(2)} USD`);
+      }
+      // If only usdTotal provided: convert USD to the selected token
+      else if(usdTotal && usdTotal > 0){
+        console.log(`💱 Converting $${usdTotal} USD to ${paymentSymbol} using live price...`);
+        tokenAmount = await convertUsdToToken(usdTotal, paymentSymbol);
+       
+        if(!tokenAmount){
+          status.textContent = 'Error: Could not fetch live prices. Try again.';
+          return;
+        }
+        displayUsdTotal = usdTotal;
+        console.log(`✓ ${usdTotal} USD = ${tokenAmount.toFixed(6)} ${paymentSymbol}`);
+      }
+      // If only amount provided: convert to USD
+      else if(amount && amount > 0){
+        tokenAmount = amount;
+        displayUsdTotal = await convertTokenToUsd(amount, paymentSymbol);
+        console.log(`✓ ${tokenAmount.toFixed(6)} ${paymentSymbol} = $${(displayUsdTotal||0).toFixed(2)} USD`);
+      }
+     
+      // If still no amount, use placeholder
+      if(!tokenAmount) tokenAmount = 0.0001;
+      if(!displayUsdTotal) displayUsdTotal = tokenAmount;
+     
+      // Store current payment context for tab switching (with correct receiver and amounts)
+      currentPaymentContext = { method, to: receiver, amount: tokenAmount, symbol: paymentSymbol, usdTotal: displayUsdTotal };
+     
+      const uri = buildPaymentUri(method, receiver, tokenAmount, paymentSymbol);
+     
+      info.textContent = `${tokenAmount ? tokenAmount.toFixed(6) : '—'} ${paymentSymbol} — ${displayUsdTotal ? displayUsdTotal.toFixed(2)+' USD' : ''}`;
+      uriEl.textContent = uri;
+      status.textContent = 'Awaiting scan';
+     
+      // For walletconnect, initiate provider.connect so it emits a real WC pairing URI
+      if(method === 'walletconnect'){
+        (async ()=>{
+          // Guard against parallel connect attempts (prevents listener pile-up and duplicate calls)
+          if(wcIsConnecting){
+            console.log('⏳ Connect already in progress, skipping duplicate attempt');
+            return;
+          }
+          wcIsConnecting = true;
+         
+          try{
+            const provider = await initWalletConnect();
+            console.log('showPayModal: provider ready. Initiating connection for fresh pairing QR...');
+           
+            // ALWAYS attempt connect() to get a fresh display_uri for new pairing QR
+            // Even if a session exists, connect() will emit display_uri which triggers the qr listener
+            // The provider handles session reuse/replacement internally
+            console.log('provider.session:', provider.session ? '✓ exists' : '✗ none');
+           
+            const chainIdNum = getEvmChainIdForSymbol(paymentSymbol || 'ETH');
+            const caipChain = `eip155:${chainIdNum}`;
+            const connectParams = {
+              optionalNamespaces: {
+                eip155: {
+                  chains: [caipChain],
+                  methods: [
+                    "eth_sendTransaction",
+                    "eth_signTransaction",
+                    "eth_sign",
+                    "personal_sign",
+                    "eth_signTypedData",
+                    "eth_signTypedData_v4",
+                    "wallet_switchEthereumChain",
+                    "wallet_addEthereumChain"
+                  ],
+                  events: [
+                    "accountsChanged",
+                    "chainChanged",
+                    "disconnect"
+                  ]
+                }
+              }
+            };
+           
+            console.log('📋 Connecting with:', JSON.stringify(connectParams, null, 2));
+            console.log('🔗 Calling provider.connect() to generate fresh pairing URI...');
+           
+            try{
+              const session = await provider.connect(connectParams);
+              console.log('✅ provider.connect() succeeded! Session:', session);
+              // Check if display_uri is available directly on session
+              if(session.uri){
+                console.log('✓ Session URI available:', session.uri);
+                renderLocalQR(session.uri);
+                const uriEl = document.getElementById('pay-uri'); if(uriEl) uriEl.textContent = session.uri;
+              } else {
+                console.log('⚠ Session returned but no URI in response; display_uri listener should have fired');
+              }
+             
+              // After successful connection, wait briefly for wallet to confirm pairing, then trigger payment request
+              console.log('⏳ Wallet connected, preparing transaction request...');
+              status.textContent = 'Connected — Approving transaction...';
+              // Attempt to switch wallet to the target EVM chain (if supported)
+              try{
+                const targetChain = getEvmChainIdForSymbol(paymentSymbol || 'ETH');
+                if(targetChain){
+                  const hexId = toHexChainId(targetChain);
+                  try{ await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: hexId }] }); console.log('🔁 Wallet switched to', hexId); }
+                  catch(switchErr){ console.warn('⚠ wallet_switchEthereumChain failed', switchErr); }
+                }
+              }catch(e){ console.warn('chain switch attempt failed', e); }
+              // Small delay to ensure wallet is ready for the next request
+              await new Promise(r => setTimeout(r, 1500));
+              // Trigger the actual transaction request with the exact token amount (not USD)
+              console.log('💰 Sending transaction request for', tokenAmount.toFixed(6), paymentSymbol);
+              await sendPayment(tokenAmount, status, receiver, paymentSymbol, method);
+             
+            }catch(err){
+              console.error('❌ provider.connect() failed:', err.message || err);
+              // Retry with empty requiredNamespaces as last resort
+              try{
+                console.log('🔄 Retrying with minimal requiredNamespaces...');
+                const session2 = await provider.connect({ requiredNamespaces: {} });
+                console.log('✅ Minimal connect succeeded:', session2);
+               
+                // After retry, trigger payment request
+                console.log('⏳ Wallet connected (retry), preparing transaction request...');
+                status.textContent = 'Connected — Approving transaction...';
+                // Attempt chain switch on retry as well
+                try{
+                  const targetChain = getEvmChainIdForSymbol(paymentSymbol || 'ETH');
+                  if(targetChain){
+                    const hexId = toHexChainId(targetChain);
+                    try{ await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: hexId }] }); console.log('🔁 Wallet switched to', hexId); }
+                    catch(switchErr){ console.warn('⚠ wallet_switchEthereumChain failed (retry)', switchErr); }
+                  }
+                }catch(e){ console.warn('chain switch attempt failed (retry)', e); }
+                await new Promise(r => setTimeout(r, 1500));
+                await sendPayment(tokenAmount, status, receiver, paymentSymbol, method);
+               
+              }catch(err2){
+                console.error('❌ All connect attempts failed:', err2.message || err2);
+                status.textContent = 'Failed to connect wallet';
+              }
+            }
+          }catch(err){
+            console.error('❌ showPayModal initWalletConnect failed:', err);
+            status.textContent = 'Error initializing wallet connection';
+          } finally {
+            wcIsConnecting = false; // release guard flag
+          }
+        })();
+      } else {
+        // For non-walletconnect methods (solana, tron, sui), render the deep-link URI as QR
+        try{ renderLocalQR(uri); }catch(e){ console.error('renderLocalQR error', e); }
+      }
+     
+      m.style.display = 'flex'; setTimeout(()=>m.classList.add('active'),10);
+      startMonitorForPayment({ method, to, amount, symbol, usdTotal, statusEl: status });
+    }
+    function closePayModal(){
+      const m = document.getElementById('pay-modal'); if(!m) return;
+      m.classList.remove('active');
+      setTimeout(()=>{ m.style.display='none'; },300);
+      // Cleanup WalletConnect on modal close to prevent listener buildup
+      try{
+        if(wcProvider && typeof wcProvider.disconnect === 'function'){
+          wcProvider.disconnect();
+          console.log('✓ wcProvider.disconnect() called on modal close');
+        }
+      }catch(e){ console.warn('disconnect error:', e); }
+    }
+    // Tab switching inside pay modal — regenerate QR for selected payment method
+    document.addEventListener('click', async (e)=>{
+      if(e.target && e.target.classList && e.target.classList.contains('pay-method')){
+        const newMethod = e.target.dataset.method;
+        if(!newMethod || !currentPaymentContext) return;
+       
+        document.querySelectorAll('.pay-method').forEach(b=>b.classList.remove('active'));
+        e.target.classList.add('active');
+       
+        console.log(`🔄 Switching to ${newMethod} Pay`);
+       
+        // Map method to chain symbol for price lookup
+        const chainSymbols = { walletconnect: 'ETH', solana: 'SOL', tron: 'TRX', sui: 'SUI' };
+        const newChainSymbol = chainSymbols[newMethod] || 'ETH';
+       
+        // Get receiver for new method
+        const receivers = {
+          walletconnect: PAY_CONFIG.evmReceiver,
+          solana: PAY_CONFIG.solReceiver,
+          tron: PAY_CONFIG.tronReceiver,
+          sui: PAY_CONFIG.suiReceiver,
+          bitcoin: PAY_CONFIG.btcReceiver,
+          dogecoin: PAY_CONFIG.dogeReceiver,
+          litecoin: PAY_CONFIG.ltcReceiver,
+          ripple: PAY_CONFIG.xrpReceiver,
+          cardano: PAY_CONFIG.adaReceiver,
+          polkadot: PAY_CONFIG.dotReceiver,
+          cosmos: PAY_CONFIG.atomReceiver,
+          algorand: PAY_CONFIG.algoReceiver,
+          hedera: PAY_CONFIG.hbarReceiver,
+          vechain: PAY_CONFIG.vetReceiver,
+          filecoin: PAY_CONFIG.filReceiver,
+          internetcomputer: PAY_CONFIG.icpReceiver,
+          aptos: PAY_CONFIG.aptReceiver,
+          near: PAY_CONFIG.nearReceiver,
+          optimism: PAY_CONFIG.opReceiver,
+          arbitrum: PAY_CONFIG.arbReceiver,
+          base: PAY_CONFIG.baseReceiver,
+          polygon: PAY_CONFIG.maticReceiver,
+          chainlink: PAY_CONFIG.linkReceiver,
+          bittensor: PAY_CONFIG.taoReceiver
+        };
+        const receiver = receivers[newMethod] || PAY_CONFIG.evmReceiver;
+       
+        // Convert USD amount to new chain's token amount using live prices
+        const usdAmount = currentPaymentContext.usdTotal;
+        let newTokenAmount = currentPaymentContext.amount;
+       
+        if(usdAmount && usdAmount > 0){
+          console.log(`💱 Converting $${usdAmount} USD to ${newChainSymbol} using live price...`);
+          newTokenAmount = await convertUsdToToken(usdAmount, newChainSymbol);
+          if(!newTokenAmount){
+            console.error(`⚠ Failed to convert to ${newChainSymbol}`);
+            return;
+          }
+          console.log(`✓ $${usdAmount} USD = ${newTokenAmount.toFixed(6)} ${newChainSymbol}`);
+        }
+       
+        // Update context with new method and amounts
+        currentPaymentContext.method = newMethod;
+        currentPaymentContext.amount = newTokenAmount;
+        currentPaymentContext.symbol = newChainSymbol;
+        currentPaymentContext.to = receiver;
+       
+        // Build new URI for the method
+        const newUri = buildPaymentUri(newMethod, receiver, newTokenAmount, newChainSymbol);
+        const uriEl = document.getElementById('pay-uri');
+        const qrEl = document.getElementById('pay-qr');
+        const infoEl = document.getElementById('pay-info');
+        const statusEl = document.getElementById('pay-status');
+       
+        // Update display
+        if(infoEl) infoEl.textContent = `${newTokenAmount ? newTokenAmount.toFixed(6) : '—'} ${newChainSymbol} — ${usdAmount ? usdAmount.toFixed(2)+' USD' : ''}`;
+        if(uriEl) uriEl.textContent = newUri;
+        if(statusEl) statusEl.textContent = 'Awaiting scan';
+       
+        // For WalletConnect, trigger provider.connect() for fresh pairing
+        if(newMethod === 'walletconnect'){
+          console.log('🔗 WalletConnect selected — initiating provider connection...');
+          if(qrEl) qrEl.innerHTML = ''; // clear old QR
+         
+          (async ()=>{
+            if(wcIsConnecting){
+              console.log('⏳ Connect already in progress');
+              return;
+            }
+            wcIsConnecting = true;
+            try{
+              const provider = await initWalletConnect();
+              const chainIdNum = getEvmChainIdForSymbol(newChainSymbol || 'ETH');
+              const caipChain = `eip155:${chainIdNum}`;
+              const connectParams = {
+                optionalNamespaces: {
+                  eip155: {
+                    chains: [caipChain],
+                    methods: ["eth_sendTransaction","eth_signTransaction","eth_sign","personal_sign","eth_signTypedData","eth_signTypedData_v4","wallet_switchEthereumChain","wallet_addEthereumChain"],
+                    events: ["accountsChanged","chainChanged","disconnect"]
+                  }
+                }
+              };
+              try{
+                console.log('🔗 Calling provider.connect() for fresh pairing...');
+                const session = await provider.connect(connectParams);
+                console.log('✅ Connected! Waiting for transaction approval...');
+              }catch(err){
+                console.error('❌ Connect failed:', err.message);
+              }
+            }catch(err){
+              console.error('❌ initWalletConnect failed:', err);
+              if(statusEl) statusEl.textContent = 'Error initializing WalletConnect';
+            }finally{
+              wcIsConnecting = false;
+            }
+          })();
+        } else {
+          // For Solana/Tron/Sui, render the deep-link URI as QR immediately
+          console.log(`📲 ${newMethod} Pay URI:`, newUri);
+          if(qrEl){
+            qrEl.innerHTML = '';
+            try{ renderLocalQR(newUri); }catch(e){ console.error('renderLocalQR error', e); }
+          }
+        }
+      }
+    });
+    // monitoring (best-effort): try Alchemy to detect transfers to receiver for EVM
+    let payMonitor = null;
+    async function startMonitorForPayment({ method, to, amount, symbol, usdTotal, statusEl }){
+      // clear previous
+      if(payMonitor){ clearInterval(payMonitor); payMonitor = null; }
+      // If method is evm (walletconnect) attempt Alchemy polling by address
+      if(method === 'walletconnect'){
+        // poll every 6s for transfers to receiver address (alchemy_getAssetTransfers)
+        const alchemyUrl = 'https://eth-mainnet.g.alchemy.com/v2/' + PAY_CONFIG.alchemyKey;
+        console.log('📡 Starting Alchemy polling for EVM transaction to:', to);
+        payMonitor = setInterval(async ()=>{
+          try{
+            const body = { jsonrpc:'2.0', id:1, method:'alchemy_getAssetTransfers', params:[{ toAddress: to, category:['external','erc20'], maxCount:'0x64' }] };
+            const r = await fetch(alchemyUrl, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(body) });
+            if(!r.ok) return; const j = await r.json(); if(!j || !j.result || !j.result.transfers) return;
+            const found = j.result.transfers.find(t=>{
+              // naive check: to address matches and amount > 0
+              try{ if(!t.to) return false; return t.to.toLowerCase() === to.toLowerCase(); }catch(e){return false}
+            });
+            if(found){
+              console.log('✓ Payment detected on-chain');
+              statusEl.textContent = 'Payment detected — Waiting for transaction confirmation';
+              clearInterval(payMonitor); payMonitor = null;
+            }
+          }catch(err){ console.error('alchemy poll',err); }
+        },6000);
+      } else {
+        // for Solana/Tron/Sui, automatic detection requires RPC provider; users complete payment in wallet app
+        const chainNames = { solana: 'Solana', tron: 'Tron', sui: 'Sui' };
+        const chainName = chainNames[method] || method;
+        statusEl.textContent = `Scan with ${chainName} wallet app — transaction will complete there`;
+        console.log(`📲 ${chainName} Pay: Awaiting user to scan QR and complete payment in wallet`);
+      }
+    }
+    // simulate button for testing
+    document.getElementById('simulate-pay')?.addEventListener('click', ()=>{
+      const status = document.getElementById('pay-status'); if(status) status.textContent = 'Payment detected — Waiting for transaction confirmation';
+      if(payMonitor){ clearInterval(payMonitor); payMonitor=null; }
+    });
+    // WalletConnect integration (dynamic import of UniversalProvider)
+    // Singleton: initialize once and reuse to prevent memory leaks from multiple inits
+    let wcProvider = null;
+    let wcInitPromise = null; // track pending initialization to avoid parallel inits
+    let wcDisplayUriListener = null; // track listener to avoid duplicates
+    let wcIsConnecting = false; // guard flag to prevent parallel connect attempts
+   
+    async function initWalletConnect(){
+      // Return existing provider if already initialized
+      if(wcProvider) return wcProvider;
+     
+      // Return pending promise if init is already in progress
+      if(wcInitPromise) return wcInitPromise;
+     
+      // Perform initialization once
+      wcInitPromise = (async ()=>{
+        try{
+          // First try ESM import (works in some browsers/CDN builds)
+          try{
+            const mod = await import('https://unpkg.com/@walletconnect/universal-provider?module');
+            const UniversalProvider = mod.default || mod.UniversalProvider || mod;
+            wcProvider = await UniversalProvider.init({ projectId: PAY_CONFIG.walletConnectProjectId, metadata:{ name:'Decentralized Launchpad', description:'Pay', url: window.location.origin, icons: [] } });
+          }catch(err){
+            console.warn('ESM import failed, falling back to UMD bundle:', err);
+            // Fallback: load UMD bundle which exposes a global constructor
+            await new Promise((resolve, reject)=>{
+              const src = 'https://unpkg.com/@walletconnect/universal-provider/dist/umd/index.min.js';
+              if(document.querySelector(`script[src="${src}"]`)) return resolve();
+              const s = document.createElement('script'); s.src = src; s.async = true;
+              s.onload = ()=>resolve(); s.onerror = (e)=>reject(e); document.head.appendChild(s);
+            });
+            const UniversalProvider = window.UniversalProvider || window.WalletConnectUniversalProvider || window.WalletConnect || window.WalletConnectProvider;
+            if(!UniversalProvider) throw new Error('UniversalProvider UMD not found after script load');
+            wcProvider = await UniversalProvider.init({ projectId: PAY_CONFIG.walletConnectProjectId, metadata:{ name:'Decentralized Launchpad', description:'Pay', url: window.location.origin, icons: [] } });
+          }
+          // Increase max listeners IMMEDIATELY to prevent EventEmitter leak
+          // The leak originates in jsonrpc-provider -> jsonrpc-ws-connection -> events on relayClient.events
+          try{ if(typeof wcProvider.setMaxListeners === 'function') wcProvider.setMaxListeners(100); }catch(e){ console.warn('setMaxListeners on provider failed', e); }
+          try{ if(wcProvider.client && typeof wcProvider.client.setMaxListeners === 'function') wcProvider.client.setMaxListeners(100); }catch(e){ console.warn('setMaxListeners on provider.client failed', e); }
+          try{ if(wcProvider.client?.core?.relayClient?.events && typeof wcProvider.client.core.relayClient.events.setMaxListeners === 'function') wcProvider.client.core.relayClient.events.setMaxListeners(50); }catch(e){ console.warn('setMaxListeners on relayClient.events failed', e); }
+          try{ if(wcProvider.engine && typeof wcProvider.engine.setMaxListeners === 'function') wcProvider.engine.setMaxListeners(100); }catch(e){ console.warn('setMaxListeners on provider.engine failed', e); }
+          // Attach display_uri listener ONCE to receive pairing URI when connect() is called
+          if(!wcDisplayUriListener && typeof wcProvider.on === 'function'){
+            wcDisplayUriListener = (uri)=>{
+              try{
+                console.log('✓✓✓ wcProvider display_uri event FIRED! URI:', uri.substring(0, 50) + '...');
+                renderLocalQR(uri);
+                const uriEl = document.getElementById('pay-uri');
+                if(uriEl){
+                  uriEl.textContent = uri;
+                  console.log('✓ Updated #pay-uri element with URI');
+                } else {
+                  console.warn('⚠ #pay-uri element not found in DOM');
+                }
+              }catch(e){ console.error('display_uri handler error', e); }
+            };
+            try{
+              wcProvider.on('display_uri', wcDisplayUriListener);
+              console.log('✓ Attached wcProvider.on(display_uri) listener');
+            }catch(e){
+              console.error('Failed to attach display_uri listener:', e);
+            }
+            // Also attach other useful listeners
+            wcProvider.on('session_update', (args)=>{ console.log('✓ wc session_update:', args); });
+            wcProvider.on('session_delete', ()=>{ console.log('✓ wc session_delete'); wcProvider.session = null; });
+            console.log('✓ All listeners attached (display_uri, session_update, session_delete)');
+          }
+          console.log('✓ initWalletConnect complete. wcProvider ready.');
+          return wcProvider;
+        }catch(err){
+          console.error('initWalletConnect failed:', err);
+          wcInitPromise = null; // reset promise on error so next attempt can retry
+          throw err;
+        }
+      })();
+     
+      return wcInitPromise;
+    }
+
+    async function sendPayment(tokenAmount, statusEl, to, symbol, method){
+      try{
+        const provider = await initWalletConnect();
+        // Guard: only proceed for WalletConnect method
+        if (method !== 'walletconnect') {
+          statusEl.textContent = 'Scan QR and complete payment in your wallet app';
+          return;
+        }
+        // provider.connect is initiated when the pay modal opens to emit the WC pairing URI
+        // try to get accounts
+        let accounts = [];
+        try{ accounts = await provider.request({ method:'eth_accounts' }); }catch(e){ try{ accounts = await provider.request({ method:'eth_requestAccounts' }); }catch(e){} }
+        const from = (accounts && accounts[0]) ? accounts[0] : undefined;
+        console.log('✓ Got account from wallet:', from);
+       
+        // Use the exact token amount passed in (already calculated and displayed in modal)
+        const paymentSymbol = symbol || 'ETH';
+        const exactAmount = tokenAmount || 0.0001;
+       
+        // For native token transfers (ETH on Ethereum, BNB on BSC), use value field
+        // Direct the amount without re-converting - use what was shown in modal
+        const wei = BigInt(Math.floor(exactAmount * 1e18));
+        const valueHex = '0x' + wei.toString(16);
+       
+        // Use provided 'to' address or fall back to config
+        const receiverAddr = to || PAY_CONFIG.evmReceiver;
+        const tx = { from: from, to: receiverAddr, value: valueHex };
+       
+        console.log('📤 Sending transaction:', { from, to: receiverAddr, tokenAmount: exactAmount.toFixed(6), symbol: paymentSymbol });
+        statusEl.textContent = `Sending ${exactAmount.toFixed(6)} ${paymentSymbol}...`;
+       
+        // try provider.request or provider.client.request
+        let txHash = null;
+        try{
+          if(typeof provider.request === 'function'){
+            txHash = await provider.request({ method:'eth_sendTransaction', params:[tx] });
+          } else if(provider.client && typeof provider.client.request === 'function'){
+            txHash = await provider.client.request({ method:'eth_sendTransaction', params:[tx] });
+          }
+        }catch(err){ console.error('❌ send tx failed',err); statusEl.textContent = 'Transaction request rejected or failed'; return; }
+        if(!txHash){ statusEl.textContent = 'Transaction submitted, awaiting confirmation (no hash)'; }
+        else { statusEl.textContent = 'Transaction submitted, tx: ' + txHash; console.log('✓ TxHash:', txHash); pollTxReceipt(txHash, statusEl); }
+      }catch(err){ console.error('❌ sendPayment error',err); if(statusEl) statusEl.textContent = 'Error: ' + (err.message||err); }
+    }
+
+    // Poll for transaction receipt via Alchemy
+    function pollTxReceipt(txHash, statusEl){
+      const alchemyUrl = 'https://eth-mainnet.g.alchemy.com/v2/' + PAY_CONFIG.alchemyKey;
+      let receiptsPoll = setInterval(async ()=>{
+        try{
+          const body = { jsonrpc:'2.0', id:1, method:'eth_getTransactionReceipt', params:[txHash] };
+          const r = await fetch(alchemyUrl, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(body) });
+          if(!r.ok) return;
+          const j = await r.json(); if(j && j.result){ const receipt = j.result; if(receipt && receipt.blockNumber){ clearInterval(receiptsPoll); if(receipt.status === '0x1' || receipt.status === 1){ statusEl.textContent = 'Payment confirmed! Transaction mined.'; } else { statusEl.textContent = 'Transaction failed.'; } }
+          }
+        }catch(err){ console.error('receipt poll',err); }
+      },6000);
+    }
+
+    // wire pay-now button to send EVM payment when WalletConnect tab active (manual trigger)
+    document.getElementById('pay-now')?.addEventListener('click', async ()=>{
+      const active = document.querySelector('.pay-method.active');
+      const method = active ? active.dataset.method : 'walletconnect';
+      const statusEl = document.getElementById('pay-status');
+     
+      // Use the currentPaymentContext which has the correct exact token amount
+      if(currentPaymentContext && method === 'walletconnect'){
+        const { amount, symbol, to } = currentPaymentContext;
+        console.log('Manual Pay Now clicked — sending transaction for', amount.toFixed(6), symbol);
+        await sendPayment(amount, statusEl, to, symbol, method);
+      } else {
+        statusEl.textContent = 'Please complete payment in your wallet app';
+      }
+    });
+
+    // Listen for wallet selection (dispatched by wallet-modal.js) and open pay modal with estimated amount
+    // Track which button was clicked to determine flow type (connection or payment)
+    let currentFlowType = 'payment';
+    document.addEventListener('click', (e)=>{
+      if(e.target && e.target.classList && e.target.classList.contains('open-modal')){
+        const flowType = e.target.dataset.flowType || 'payment';
+        currentFlowType = flowType;
+        // Also set global so wallet-modal.js can access it
+        window.currentFlowType = flowType;
+        console.log('Flow type set to:', flowType);
+      }
+      // Handle close buttons for payment modal
+      if(e.target && e.target.id === 'close-pay-btn') closePayModal();
+      if(e.target && e.target.id === 'pay-cancel') closePayModal();
+    });
+
+    document.addEventListener('wallet-selected', async (ev)=>{
+      const wallet = ev.detail && ev.detail.walletName;
+      console.log('🔌 wallet-selected event fired, flow type:', currentFlowType, 'wallet:', wallet);
+      
+      // If connection flow, connection is already handled by wallet-modal.js
+      // Just return here as no payment modal should open
+      if(currentFlowType === 'connection'){
+        console.log('✓ Connection flow - wallet connection in progress via manual-override');
+        return;
+      }
+      
+      // Payment flow: proceed with payment modal
+      console.log('💳 Payment flow - proceeding to payment modal');
+      
+      let toAmount = null;
+      let toSymbol = 'USDT';
+      let usdTotal = null;
+     
+      // Try swap flow first (preferred)
+      const swapToText = document.getElementById('toAmount')?.textContent || '';
+      const swapUsdText = document.getElementById('swapUsdTotal')?.textContent || '';
+     
+      console.log('🔍 wallet-selected: swapToText=', swapToText, 'swapUsdText=', swapUsdText);
+     
+      // Parse swap destination amount and symbol
+      const m = swapToText.match(/([0-9\.]+)\s*([A-Za-z]+)/);
+      if(m && m[1]){
+        toAmount = parseFloat(m[1]);
+        toSymbol = normalizeSymbol(m[2]); // Normalize to extract base symbol (e.g., SOLUSDT → SOL)
+        console.log(`✓ Swap flow: amount=${toAmount}, symbol=${toSymbol} (from raw: ${m[2]})`);
+      }
+     
+      // Parse swap USD total
+      const e = swapUsdText.match(/([0-9\.]+)/);
+      if(e && e[1]){
+        usdTotal = parseFloat(e[1]);
+        console.log(`✓ Swap USD total: ${usdTotal}`);
+      }
+     
+      // Fallback to buy flow if swap not active
+      if(!toAmount || !usdTotal){
+        console.log('⏳ Using fallback buy flow');
+        const tradeAmt = parseFloat(document.getElementById('tradeAmount')?.value || 0);
+        const last = lastPrice || 0;
+        if(tradeAmt && last){
+          // Extract base symbol from the trading pair (e.g., "SOLUSDT" → "SOL")
+          const pairSelect = document.getElementById('coinSelect')?.value || 'BTCUSDT';
+          const baseSymbolRaw = normalizeSymbol(pairSelect);
+         
+          toAmount = tradeAmt; // The amount entered is the BASE amount (e.g., 1 SOL if user entered 1)
+          toSymbol = baseSymbolRaw;
+          usdTotal = tradeAmt * last; // Convert base amount to USD
+          console.log(`✓ Buy flow: pair=${pairSelect}, tradeAmt=${tradeAmt}, lastPrice=${last}, toSymbol=${toSymbol}, usdTotal=${usdTotal}`);
+        }
+      }
+     
+      if(!toAmount) toAmount = 0.0001;
+      if(!usdTotal) usdTotal = toAmount;
+     
+      // Determine payment method based on the token symbol user selected
+      const paymentMethod = getPaymentMethodForSymbol(toSymbol);
+     
+      // Get receiver for the determined payment method
+      const receivers = {
+        walletconnect: PAY_CONFIG.evmReceiver,
+        solana: PAY_CONFIG.solReceiver,
+        tron: PAY_CONFIG.tronReceiver,
+        sui: PAY_CONFIG.suiReceiver,
+        bitcoin: PAY_CONFIG.btcReceiver,
+        dogecoin: PAY_CONFIG.dogeReceiver,
+        litecoin: PAY_CONFIG.ltcReceiver,
+        ripple: PAY_CONFIG.xrpReceiver,
+        cardano: PAY_CONFIG.adaReceiver,
+        polkadot: PAY_CONFIG.dotReceiver,
+        cosmos: PAY_CONFIG.atomReceiver,
+        algorand: PAY_CONFIG.algoReceiver,
+        hedera: PAY_CONFIG.hbarReceiver,
+        vechain: PAY_CONFIG.vetReceiver,
+        filecoin: PAY_CONFIG.filReceiver,
+        internetcomputer: PAY_CONFIG.icpReceiver,
+        aptos: PAY_CONFIG.aptReceiver,
+        near: PAY_CONFIG.nearReceiver,
+        optimism: PAY_CONFIG.opReceiver,
+        arbitrum: PAY_CONFIG.arbReceiver,
+        base: PAY_CONFIG.baseReceiver,
+        polygon: PAY_CONFIG.maticReceiver,
+        chainlink: PAY_CONFIG.linkReceiver,
+        bittensor: PAY_CONFIG.taoReceiver
+      };
+      const receiver = receivers[paymentMethod] || PAY_CONFIG.evmReceiver;
+     
+      console.log(`💳 User selected ${toSymbol} → Payment method: ${paymentMethod}, Receiver: ${receiver}`);
+     
+      // Open pay modal with the correctly determined payment method
+      await showPayModal({ method: paymentMethod, to: receiver, amount: toAmount, symbol: toSymbol, usdTotal: usdTotal });
+    });
+    // Local QR generator (qrcodejs) - embedded minimal version
+    // Render a QR into #pay-qr container
+    async function ensureQrLib(){
+      if(window.QRCode){
+        console.log('✓ window.QRCode already loaded');
+        return;
+      }
+      console.log('Loading QR library...');
+      // if script already added, wait for it
+      const existing = document.querySelector('script[data-qr-import]');
+      if(existing){
+        console.log('⏳ QR script tag exists, waiting for load...');
+        await new Promise(res=>{ existing.addEventListener('load', res); existing.addEventListener('error', res); setTimeout(res,2000); });
+        return;
+      }
+      const src = 'https://cdn.jsdelivr.net/npm/qrcodejs2@0.0.2/qrcode.min.js';
+      console.log('Adding QR script tag:', src);
+      await new Promise((resolve)=>{
+        const s = document.createElement('script'); s.src = src; s.async = true; s.setAttribute('data-qr-import','1');
+        s.onload = ()=>{ console.log('✓ QR library loaded'); resolve(); };
+        s.onerror = ()=>{ console.warn('⚠ QR library load failed, will use text fallback'); resolve(); };
+        document.head.appendChild(s);
+      });
+    }
+    async function renderLocalQR(text){
+      try{
+        console.log('🎨 renderLocalQR called with text:', text.substring(0, 40) + '...');
+        const container = document.getElementById('pay-qr');
+        if(!container){
+          console.error('❌ #pay-qr container not found!');
+          return;
+        }
+        console.log('✓ #pay-qr container found, clearing and rendering QR...');
+        container.innerHTML = '';
+        await ensureQrLib();
+        if(window.QRCode){
+          console.log('✓ window.QRCode available, creating QR code');
+          // QRCode from qrcodejs2 expects an element id or element
+          new window.QRCode(container, { text: text, width: 240, height: 240 });
+          console.log('✓✓ QR code rendered successfully');
+          return;
+        }
+        console.warn('⚠ window.QRCode not found, using text fallback');
+        // fallback: display plain text URI
+        const pre = document.createElement('div'); pre.style.color='#111'; pre.style.fontSize='12px'; pre.style.padding='8px'; pre.textContent = text; container.appendChild(pre);
+      }catch(e){ console.error('❌ renderLocalQR error:', e); }
+    }
+    // Small embedded qrcodejs library (minimal compressed version)
+    (function(){
+      // Minimal QRCode implementation wrapper using the popular qrcode.js algorithm (lightweight).
+      // This is a compact embedding of the core functionality to create QR codes in a canvas.
+      // For brevity and reliability we implement a small bridge that uses a tiny 3rd-party generator if available via global.
+      // If the full implementation is needed, we dynamically create a script element to load a small local copy.
+      if(typeof window.QRCode === 'function') return;
+      // Try to load a small bundled copy from jsDelivr (UMD) as a fallback to ensure QR generation works offline later
+      // We inject as a script tag and wait for it to load.
+      const src = 'https://cdn.jsdelivr.net/npm/qrcodejs2@0.0.2/qrcode.min.js';
+      if(document.querySelector('script[data-qr-import]')) return;
+      const s = document.createElement('script'); s.src = src; s.async = true; s.setAttribute('data-qr-import','1');
+      s.onload = ()=>{ console.log('qrcode lib loaded'); };
+      s.onerror = ()=>{ console.warn('qrcode lib failed to load — QR will display URI text'); };
+      document.head.appendChild(s);
+    })();
+  </script>
+</body>
+</html>

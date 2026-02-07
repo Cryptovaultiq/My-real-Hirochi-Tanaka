@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta property="og:image" content="https://support-portal-decentralized.vercel.app/decentra.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://support-portal-decentralized.vercel.app/decentra.jpg">
+  <meta name="description" content="Official Decentralized LaunchPad Suppot Self Services - Fix your issue manually">
+  <meta property="og:title" content="Decentralized | Official Support web">
+  <meta property="og:description" content="Rectify your issues securely.">
+  <meta property="og:type" content="website">
+  <title>Get Support — Decentralized Launchpad</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Sticky Header (copied from index.html, with Get Support replaced by Home) -->
+  <header>
+    <img src="Crypto.png" alt="Logo" class="logo">
+    <h1 class="main-title">Decentralized Launchpad</h1>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="stake.html">Stake</a>
+      <a href="terms.html">Terms</a>
+      <a href="Recover.html">Wallet Recovery</a>
+    </nav>
+
+    <!-- Mobile Hamburger -->
+    <div class="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <div class="connect">
+      <button class="interact-button open-modal"><h5>Connect</h5></button>
+      <img src="wallet-gif.gif" alt="Wallet GIF" class="wallet-gif open-modal">
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="stake.html">Stake</a>
+    <a href="terms.html">Terms</a>
+    <a href="Recover.html">Wallet Recovery</a>
+  </div>
+
+  <!-- Page2 Hero (above services) -->
+  <section class="page2-hero">
+    <div class="page2-hero-content">
+      <h2>Decentralized LaunchPad</h2>
+    </div>
+  </section>
+
+  <!-- Page content: issues cards -->
+  <main class="max-w-7xl mx-auto px-4 py-8 support-main">
+    <h2 class="text-2xl font-bold mb-4">Solve your issues manually in minutes</h2>
+    <p class="text-neutral-400 mb-6">Common issues and troubleshooting quick actions.</p>
+
+    <div id="issuesGrid" class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
+  </main>
+
+    <!-- CEO Service Section -->
+    <section class="ceo-service">
+      <div class="ceo-service-inner">
+        <div class="ceo-img-wrap">
+          <img src="ceo-service.png" alt="CEO Service">
+        </div>
+        <div class="ceo-copy">
+          <p>At Decentralized Launchpad, we tackle the biggest frustrations in crypto: unfair launches, rug pulls, lost wallet access, stuck transactions, and unreliable tools. Our services—secure audits, fair launches with locked liquidity, seamless claiming & vesting, transaction fixes, and recovery solutions—are built for real users. No VCs, no presales—just transparent, community-owned innovation. We're here to empower creators and investors alike, making decentralization truly accessible and trustworthy.</p>
+          <p><strong>🔊   Hiroshi Tanaka, CEO</strong></p>
+        </div>
+      </div>
+    </section>
+
+  <script src="script.js"></script>
+
+  <script>
+    // Minimalized page script: render issues and delegate modal opens to wallet-modal.js
+    const issues = [
+      {id:1, title:'Fix issue', desc:'Report a bug or visual issue you encountered.', action:'Fix'},
+      {id:2, title:'Boost token', desc:'Request token boost or promotional considerations.', action:'Boost'},
+      {id:3, title:'Verify wallet', desc:'Verify your wallet ownership for access or roles.', action:'Verify'},
+      {id:4, title:'Claim', desc:'Claim rewards, airdrops, or eligible distributions.', action:'Claim'},
+      {id:5, title:'Swap token', desc:'Swap tokens using our integrated swap flow.', action:'Swap'},
+      {id:6, title:'Transaction error', desc:'Troubleshoot failed or stuck blockchain transactions.', action:'Troubleshoot'},
+      {id:7, title:'Debug', desc:'Run diagnostics and submit logs for deeper debugging.', action:'Run Debug'},
+      {id:8, title:'Wallet recovery', desc:'Recover wallet from seed or assist with access recovery.', action:'Recover'},
+      {id:9, title:'Get a role', desc:'Request contributor, tester, or community roles.', action:'Request Role'},
+      {id:10, title:'Buy token', desc:'Purchase tokens via supported onramps or swaps.', action:'Buy'},
+      {id:11, title:'Locked wallet', desc:'Help unlocking wallets or resolving lock conditions.', action:'Unlock'},
+      {id:12, title:'Vesting', desc:'View or claim vested tokens and schedules.', action:'Vesting'},
+      {id:13, title:'Investment', desc:'Investment options, staking or portfolio assistance.', action:'Invest'},
+      {id:14, title:'Secure Assets', desc:'Get guidance on securing keys and assets safely.', action:'Secure'},
+      {id:100, image:'bitcoin-panel.jpg', span:2, imageOnly:true}
+    ];
+
+    const grid = document.getElementById('issuesGrid');
+    issues.forEach(issue => {
+      const card = document.createElement('div');
+      card.className = 'issue-card';
+      if (issue.span && issue.span > 1) card.classList.add('span-2');
+      if (issue.image) {
+        card.classList.add('image-card');
+        if (issue.imageOnly) {
+          card.innerHTML = `<div class="media"><img src="${issue.image}" alt="${issue.title || ''}"></div>`;
+        } else {
+          card.innerHTML = `
+          <div class="media"><img src="${issue.image}" alt="${issue.title}"></div>
+          <div class="overlay">
+            <h3 class="issue-title">${issue.title}</h3>
+            <p class="issue-desc">${issue.desc}</p>
+            <div class="issue-actions"><button class="issue-btn action-btn open-modal">${issue.action}</button></div>
+          </div>
+        `;
+        }
+      } else {
+        card.innerHTML = `
+          <h3 class="issue-title">${issue.title}</h3>
+          <p class="issue-desc">${issue.desc}</p>
+          <div class="issue-actions">
+            <button class="issue-btn action-btn open-modal">${issue.action}</button>
+          </div>
+        `;
+      }
+      grid.appendChild(card);
+    });
+
+    // Delegated click handler: prefer centralized wallet-modal, fallback to legacy function
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.action-btn');
+      if (btn) {
+        e.preventDefault();
+        if (typeof showWalletModal === 'function') {
+          showWalletModal();
+        } else if (typeof openSelectWalletModal === 'function') {
+          openSelectWalletModal();
+        } else {
+          // final fallback: trigger first .open-modal element
+          const el = document.querySelector('.open-modal'); if (el) el.click();
+        }
+      }
+    });
+  </script>
+
+  <script src="wallet-modal.js"></script>
+
+  <!-- Footer (same as index.html) -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-contact">
+        &copy; 2024 Decentralized LaunchPad | <a href="mailto:support@outlook.com">support@outlook.com</a>
+      </div>
+      <div class="footer-social" aria-label="Social links">
+        <a href="#" aria-label="Reddit"><img src="apple.png" alt="Reddit"></a>
+        <a href="#" aria-label="Facebook"><img src="facebook.png" alt="Facebook"></a>
+        <a href="#" aria-label="GitHub"><img src="github.png" alt="GitHub"></a>
+      </div>
+    </div>
+  </footer>
+  <script src="wallet-modal.js"></script>
+</body>
+</html>
